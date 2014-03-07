@@ -81,7 +81,7 @@ module.exports = function(io){
           console.error('There was a serious error accessing the database:', err);
           res.send(500, {error:'There was a database error.'});
         }else{
-          if(thing.creator !== req.user._id){
+          if(thing.creator.toString() !== req.user._id.toString()){
             res.send(401, {error: 'Authenticated used does not own this Thing.'});
           }else{
             thing.remove(function(err){

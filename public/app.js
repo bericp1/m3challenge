@@ -7,10 +7,12 @@ require('./auth');
   angular
     .module('m3legacy', ['compiled-templates', 'ngRoute', 'btford.socket-io', 'auth', 'sharing'])
     .directive('fileReader', require('./common/file-reader-directive'))
-    .config(['socketProvider', '$routeProvider', function(socketProvider, $routeProvider){
-      socketProvider.prefix('socket.');
-          $routeProvider.otherwise({
-              redirectTo: '/sharing'
-          });
+    .factory('sharingSocket', function (socketFactory) {
+      return socketFactory();
+    })
+    .config(['$routeProvider', function($routeProvider){
+      $routeProvider.otherwise({
+        redirectTo: '/sharing'
+      });
     }]);
 })(angular);

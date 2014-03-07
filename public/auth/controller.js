@@ -3,7 +3,7 @@ module.exports = ['$scope', '$routeParams', '$location', 'AuthUserService', func
   'use strict';
 
   $scope.state = {
-    active: $routeParams['mode'],
+    active: $routeParams.mode,
     returnPath: $location.search()['return'],
     status: '',
     message: '',

@@ -6,6 +6,7 @@ module.exports = ['$rootScope', '$http', '$cookies', function($root, $http, $coo
 
   me.token = false;
   me.user = false;
+  me.schedule = [];
 
   $root.$watch(function(){return me.token;}, function(){
     $cookies.authToken = me.token;
@@ -24,6 +25,9 @@ module.exports = ['$rootScope', '$http', '$cookies', function($root, $http, $coo
         me.token = data.token;
         me.user = data.user;
         success.apply(this, arguments);
+        me.schedule.forEach(function(func){
+          func(me.user);
+        });
       })
       .error(error);
   };
@@ -59,6 +63,16 @@ module.exports = ['$rootScope', '$http', '$cookies', function($root, $http, $coo
         done.apply(this, arguments);
       });
 
+  };
+
+  me.runAsUser = function(func){
+    if(typeof func === 'function'){
+      if(me.user === false){
+        me.schedule.push(func);
+      }else{
+        func(me.user);
+      }
+    }
   };
 
 }];

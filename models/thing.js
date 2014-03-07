@@ -1,17 +1,16 @@
 var Schema = require('mongoose').Schema;
 module.exports = {
-  name: 'Data',
+  name: 'Thing',
   schema: {
-    data: Buffer,
+    data: String,
+    type: String,
     'creator': {
       type: Schema.Types.ObjectId,
       ref: 'User'
+    },
+    color: {
+      'type': String,
+      'default': 'default'
     }
-  },
-  autoLoad: {
-    'getAll': false,
-    'getOne': false,
-    'update': false,
-    'delete': false
   }
 };
